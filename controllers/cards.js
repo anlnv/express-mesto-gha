@@ -34,7 +34,7 @@ const createCard = (req, res) => {
 
   Card.create({ name, link, owner: req.user._id})
   .then((card) => {
-      res.send(card)
+      res.status(201).send(card)
   })
   .catch((err) => {
     if (err.name === 'ValidationError') {
