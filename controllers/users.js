@@ -52,7 +52,7 @@ const updateUser = (req, res) => {
   User.findByIdAndUpdate(
     userId,
     { name, about },
-    { new: true },
+    { new: true, runValidators: true },
   )
   .then((user) => {
     if (!user) {

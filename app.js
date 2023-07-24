@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const {ERROR_CODE} = require('./utils/constants')
 const app = express();
 
 const usersRouter = require('./routes/users');
@@ -17,7 +18,7 @@ app.use((req, res, next) => {
 });
 app.use('/cards', cardRouter);
 app.use('/users', usersRouter);
-
+app.use('*', (req, res) => res.status(ERROR_CODE.NOT_FOUND).send({ message: '404 ошибка'}));
 
 app.listen(3000, () => {
     console.log('Сервер запущен')
