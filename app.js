@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const {ERROR_CODE} = require('./utils/constants')
 const app = express();
+const bodyParser = require('body-parser');
 
 const usersRouter = require('./routes/users');
 const cardRouter = require('./routes/cards');
@@ -16,6 +17,7 @@ app.use((req, res, next) => {
 
   next();
 });
+app.use(bodyParser.json());
 app.use('/cards', cardRouter);
 app.use('/users', usersRouter);
 /*app.use('*', (req, res) => res.status(ERROR_CODE.NOT_FOUND).send({ message: '404 ошибка'}));*/
