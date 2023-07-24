@@ -6,7 +6,7 @@ const getAllCards = (req, res) => {
   Card.find({})
     .then((cards) => res.send(cards))
     .catch(() => {
-      res.status(ERROR_CODE.SERVER_ERROR).send({message: 'Ошибка по умолчанию'});
+      res.status(ERROR_CODE.SERVER_ERROR).send({message: 'На сервере произошла ошибка'});
   })
 };
 
@@ -23,7 +23,7 @@ const deleteCard = (req, res) => {
     if (err.name === 'CastError') {
       res.status(ERROR_CODE.BAD_REQUEST).send({ message: 'Переданы некорректные данные при удалении карточки.' });
     } else {
-      res.status(ERROR_CODE.SERVER_ERROR).send({ message: 'Ошибка по умолчанию' });
+      res.status(ERROR_CODE.SERVER_ERROR).send({ message: 'На сервере произошла ошибка' });
     }
   })
 }
@@ -40,7 +40,7 @@ const createCard = (req, res) => {
     if (err.name === 'ValidationError') {
       res.status(ERROR_CODE.BAD_REQUEST).send({ message: 'Переданы некорректные данные при создании карточки.' });
     } else {
-      res.status(ERROR_CODE.SERVER_ERROR).send({ message: 'Ошибка по умолчанию' });
+      res.status(ERROR_CODE.SERVER_ERROR).send({ message: 'На сервере произошла ошибка' });
     }
   })
 }
@@ -65,7 +65,7 @@ const putLike = (req, res) => {
     if (err.name === 'CastError') {
       res.status(ERROR_CODE.BAD_REQUEST).send({ message: 'Переданы некорректные данные для постановки лайка.' });
     } else {
-      res.status(ERROR_CODE.SERVER_ERROR).send({ message: 'Ошибка по умолчанию' });
+      res.status(ERROR_CODE.SERVER_ERROR).send({ message: 'На сервере произошла ошибка' });
     }
   })
 }
@@ -89,7 +89,7 @@ const deleteLike = (req, res) => {
     if (err.name === 'CastError') {
       res.status(ERROR_CODE.BAD_REQUEST).send({ message: 'Переданы некорректные данные для постановки лайка.' });
     } else {
-      res.status(ERROR_CODE.SERVER_ERROR).send({ message: 'Ошибка по умолчанию' });
+      res.status(ERROR_CODE.SERVER_ERROR).send({ message: 'На сервере произошла ошибка' });
     }
   })
 }

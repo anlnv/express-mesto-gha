@@ -6,7 +6,7 @@ const getAllUsers = (req, res) => {
   User.find({})
     .then((users) => res.send(users))
     .catch(() => {
-      res.status(ERROR_CODE.SERVER_ERROR).send({message:'Ошибка по умолчанию'});
+      res.status(ERROR_CODE.SERVER_ERROR).send({message:'На сервере произошла ошибка'});
   })
 };
 
@@ -24,7 +24,7 @@ const getUser = (req, res) => {
     if (err.name === 'CastError') {
       res.status(ERROR_CODE.BAD_REQUEST).send({ message: 'Переданы некорректные данные' });
     } else {
-      res.status(ERROR_CODE.SERVER_ERROR).send({ message: 'Ошибка по умолчанию' });
+      res.status(ERROR_CODE.SERVER_ERROR).send({ message: 'На сервере произошла ошибка' });
     }
   })
 }
@@ -41,7 +41,7 @@ const createUser = (req, res) => {
     if (err.name === 'ValidationError') {
       res.status(ERROR_CODE.BAD_REQUEST).send({ message: 'Переданы некорректные данные при создании пользователя' });
     } else {
-      res.status(ERROR_CODE.SERVER_ERROR).send({ message: 'Ошибка по умолчанию' });
+      res.status(ERROR_CODE.SERVER_ERROR).send({ message: 'На сервере произошла ошибка' });
     }
   })
 }
@@ -70,7 +70,7 @@ const updateUser = (req, res) => {
       });
     } else {
       res.status(ERROR_CODE.SERVER_ERROR).send({
-        message: 'Ошибка по умолчанию',
+        message: 'На сервере произошла ошибка',
       });
     }
   });
