@@ -18,7 +18,10 @@ app.use((req, res, next) => {
 });
 app.use('/cards', cardRouter);
 app.use('/users', usersRouter);
-app.use('*', (req, res) => res.status(ERROR_CODE.NOT_FOUND).send({ message: '404 ошибка'}));
+/*app.use('*', (req, res) => res.status(ERROR_CODE.NOT_FOUND).send({ message: '404 ошибка'}));*/
+app.use((req, res) => {
+  res.status(ERROR_CODE.NOT_FOUND).send({ message: 'Не найдено' });
+});
 
 app.listen(3000, () => {
     console.log('Сервер запущен')
