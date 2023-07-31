@@ -4,6 +4,7 @@ const User = require('../models/user');
 const BadRequestError = require('../errors/BadRequestError');
 const NotFoundError = require('../errors/NotFoundError');
 const ConflictError = require('../errors/ConflictError');
+const UnauthorizedError = require('../errors/UnauthorizedError');
 
 const getAllUsers = (req, res, next) => {
   User.find({})
@@ -129,14 +130,20 @@ const updateUserAvatar = (req, res, next) => {
 
 const login = (req, res, next) => {
   const { email, password } = req.body;
-
-  return User
-    .findUserByCredentials(email, password)
+  User.findOne({ email })
+    .select('+password')
+    .orFail(() => new UnauthorizedError('Пользователь не найден'))
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, 'super-strong-secret', {
-        expiresIn: '7d',
-      });
-      res.send({ token });
+      bcrypt.compare(password, user.password)
+        .then((validUser) => {
+          if (validUser) {
+            const token = jwt.sign({ _id: user._id }, 'super-strong-secret', { expiresIn: '7d' });
+            res.send({ token });
+          } else {
+            throw new UnauthorizedError('Передан неверный логин или пароль');
+          }
+        })
+        .catch(next);
     })
     .catch(next);
 };
