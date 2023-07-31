@@ -6,7 +6,8 @@ function auth(req, res, next) {
     const { authorization } = req.headers;
     console.log(authorization);
     if (!authorization || !authorization.startsWith('Bearer ')) {
-      return next(new UnauthorizedError('Необходимо авторизоваться'));
+      next(new UnauthorizedError('Необходимо авторизоваться'));
+      return;
     }
 
     const token = authorization.replace('Bearer ', '');
@@ -15,13 +16,14 @@ function auth(req, res, next) {
     try {
       payload = jwt.verify(token, 'super-strong-secret');
     } catch (err) {
-      return next(new UnauthorizedError('Необходимо авторизоваться'));
+      next(new UnauthorizedError('Необходимо авторизоваться'));
+      return;
     }
 
     req.user = payload;
-    return next();
+    next();
   } catch (err) {
-    return next(err);
+    next(err);
   }
 }
 
