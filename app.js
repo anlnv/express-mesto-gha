@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const { ERROR_CODE } = require('./utils/constants');
+const { NotFoundError } = require('./errors/NotFoundError');
 const { auth } = require('./middlewares/auth');
 const { error } = require('./middlewares/errors');
 
@@ -21,8 +21,8 @@ app.post('/signup', registerValidate, createUser);
 app.use('/cards', auth, cardRouter);
 app.use('/users', auth, usersRouter);
 
-app.use('/*', auth, (req, res) => {
-  res.status(ERROR_CODE.NOT_FOUND).send({ message: 'Не найдено' });
+app.use('/*', auth, () => {
+  throw new NotFoundError('Указан неверный путь');
 });
 app.use(() => error);
 
