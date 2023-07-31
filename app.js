@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const { errors } = require('celebrate');
 const { NotFoundError } = require('./errors/NotFoundError');
 const { auth } = require('./middlewares/auth');
 const { error } = require('./middlewares/errors');
@@ -16,6 +17,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/mestodb');
 console.log('connected to db');
 app.use(express.json());
 app.use(bodyParser.json());
+app.use(errors());
 app.post('/signin', authValidate, login);
 app.post('/signup', registerValidate, createUser);
 app.use('/cards', auth, cardRouter);
