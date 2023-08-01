@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { celebrate, Joi } = require('celebrate');
 const { createUser } = require('../controllers/users');
 
-const urlCheckPattern = /https?:\/\/(www\.)?[a-zA-Z\d-]+\.[\w\d\-.~:/?#[\]@!$&'()*+,;=]{2,}#?/;
+const { urlCheckPattern } = require('../utils/constants');
 
 router.post(
   '/signup',

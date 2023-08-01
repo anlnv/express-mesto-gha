@@ -15,7 +15,7 @@ const getAllCards = (req, res, next) => {
 const deleteCard = (req, res, next) => {
   const { cardId } = req.params;
   console.log(cardId);
-  Card.findByIdAndRemove(cardId)
+  Card.findById(cardId)
     .then((card) => {
       if (!card) {
         throw new NotFoundError('Карточка с указанным _id не найдена.');
@@ -27,6 +27,7 @@ const deleteCard = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'CastError') {
         next(new BadRequestError('Некорректные данные _id'));
+        return;
       }
       next(err);
     });
@@ -45,9 +46,8 @@ const createCard = (req, res, next) => {
         next(new BadRequestError(
           'Переданы некорректные данные в методы создания карточки',
         ));
-      } else {
-        next(err);
       }
+      next(err);
     });
 };
 
