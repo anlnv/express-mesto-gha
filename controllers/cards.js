@@ -46,6 +46,7 @@ const createCard = (req, res, next) => {
         next(new BadRequestError(
           'Переданы некорректные данные в методы создания карточки',
         ));
+        return;
       }
       next(err);
     });
